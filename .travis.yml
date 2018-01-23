@@ -1,0 +1,24 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - DOCKER_USERNAME=cargomediabot
+    - secure: gYelYWwNV6LnwkM+EyPrfR3u7p1aUVNc7FohQwFhz2Sk7rfJjEN2vSicfurXh8CXN2PCjkEfhaa7RZI683Gm/XoSUUHCwlN2MldO5QSZoo3YYkkmD9vqcU5OVFOAZzBcAm3RwaoFitaIg/9JSzyY+H8B2hKif7iR8gFRUX5bH/Ypekbpv65cWalJpkBBSdHN3+sMLWEkWbxfvkWg9oCzt4KTuJs/H29BuG7kxNGtcUH8xf5EqOls+AxVS7wPRsP4OgcwleEJRNCHF7I9puYnZcKzTLujVfq88pFNSVUl1mGUjwNb2PwTvNpDc/TPemqw5xeV0/1+mRbjvZ8zTa/A5L8APH10usEr2IXJ/HXINGPAsTmUQGXX/ZuK0YNg4LJhjixje9aFx7X9d/ZcEqlt4wQhay1TL5fQppjzsAEc2frYLTCEb0ICs4r6fDkBPxm58ufeuJYFd5SYYpF8C8kffKruOY8lN8WQ9kSeKeagDVJZ7JkCFZWll3TWKvpSs3S1OeagIGNUJR7LZrVaGYBm4htxYGRAJszsT0hkL7ppyPBFK6D86usd4BADPo4imrztk+O82RGfe5c/w/tLfavBYvvYVezsebYIHj4JjF48ldDXjkwVL+CYfrXVAsokubFXe5vAnYWmpN52iB53RqMXw4z4VfZM4FC1O/zpMl5Y6Yo=
+
+install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - docker --version
+
+script:
+  - docker build -t cargomedia/smtp-proxy:latest .
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ./docker-push.sh
+  on:
+    branch: master
