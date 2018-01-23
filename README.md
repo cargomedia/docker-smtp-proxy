@@ -12,6 +12,8 @@ Proxy SMTP from `localhost:25000` to `example.com:25`:
 docker run -p 25000:25000 -e SMTP_DESTINATION='example.com:25' cargomedia/smtp-proxy
 ```
 
+The server exposes a health check at `/healthz` on port 8888.
+
 Development
 -----------
 Build the image:
